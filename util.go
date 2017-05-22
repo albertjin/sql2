@@ -38,13 +38,13 @@ func Text2Id(db *sql.DB, dbName, text string, lock *sync.Mutex, toFulltext func 
         result, err = db.Exec("insert into `" + dbName + "`.`String`(`sha256`, `original`) values(?,?)", hash, text)
     }
     if err != nil {
-        err = ec.Wrapf("fail at db.Exec() with db name: %v", err, dbName)
+        err = ec.Wrapf(err, "fail at db.Exec() with db name: %v", dbName)
         return
     }
 
     x, err := result.LastInsertId()
     if err != nil {
-        err = ec.Wrap("fail at LastInsertId()", err)
+        err = ec.Wrap(err, "fail at LastInsertId()")
         return
     }
 
